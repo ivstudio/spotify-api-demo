@@ -1,0 +1,11 @@
+.container {
+	padding: 0 20px;
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.textLarge {
+	font: 1.5rem;
+	font-weight: 600;
+}
