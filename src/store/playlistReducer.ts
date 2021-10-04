@@ -1,4 +1,4 @@
-import { IStore, TRootAction } from '../types/models.types';
+import { IStore, TRootAction, IPlaylist } from '../types/models.types';
 
 export default function playlistReducer(
 	state: IStore,
@@ -11,14 +11,6 @@ export default function playlistReducer(
 				playlists: {
 					...state.playlists,
 					items: [action.payload, ...state.playlists.items],
-				},
-			};
-		case 'DELETE_PLAYLIST':
-			return {
-				...state,
-				playlists: {
-					...state.playlists,
-					items: [],
 				},
 			};
 		case 'GET_PLAYLISTS':
@@ -60,22 +52,30 @@ export default function playlistReducer(
 				},
 			};
 		case 'SET_CREATE_PLAYLIST_MODE':
-			console.log(action.payload);
 			return {
 				...state,
 				isCreatePlaylistMode: action.payload,
 			};
 		case 'ADD_TRACK_TO_PLAYLIST':
-			console.log(action.payload);
+			/* not finished */
 			return {
 				...state,
+			};
+		case 'DELETE_PLAYLIST':
+			/* not finished */
+			return {
+				...state,
+				playlists: {
+					...state.playlists,
+					items: [
+						...state.playlists.items.filter(
+							(i: IPlaylist) => i.id !== action.id
+						),
+					],
+				},
 			};
 		default: {
 			return state;
 		}
 	}
 }
-
-// ...state.playlists.items.filter(
-// 	(i: IPlaylist) => i.id !== action.id
-// ),

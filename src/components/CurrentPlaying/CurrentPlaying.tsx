@@ -8,7 +8,7 @@ import styles from './CurrentPlaying.module.css';
 
 const CurrentPlaying = () => {
 	const dispatch = useAppDispatch();
-	const { currentPlaying, activePlaylist, playlists } = useAppSelector();
+	const { currentPlaying, activePlaylist } = useAppSelector();
 
 	const { data, error, isLoading } = useFetch<ICurrentPlaying>(
 		spotifyCurrentPlaying
