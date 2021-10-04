@@ -1,0 +1,35 @@
+.container {
+}
+
+.containerContent {
+	display: grid;
+	grid-template-columns: 240px 1fr;
+	margin: 0 auto;
+	height: 100vh;
+}
+
+.sidebar {
+	z-index: 2;
+	background: #141414;
+	position: fixed;
+	width: 240px;
+	height: 100%;
+}
+
+.main {
+	z-index: 1;
+	padding: 40px 40px 40px 280px;
+	position: fixed;
+	overflow: auto;
+	height: 100%;
+	width: 100%;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background: #222222;
+	height: 90px;
+	z-index: 3;
+}
