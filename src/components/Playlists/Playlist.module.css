@@ -1,0 +1,38 @@
+.list {
+	margin: 0;
+	height: 100%;
+	padding: 150px 16px 150px;
+	overflow: auto;
+	max-width: 240px;
+	position: absolute;
+	top: 0;
+}
+
+.listItem {
+	list-style: none;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	padding: 0 8px;
+}
+
+.listItemText {
+	width: 95%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: block;
+	font-size: 14px;
+}
+
+.listItemActive {
+	font-weight: 600;
+	border-radius: 4px;
+	background: rgba(91, 117, 226, 0.25);
+}
+
+.listItem:not(.listItemActive):hover {
+	background: #202020;
+	border-radius: 4px;
+}
