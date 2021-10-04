@@ -17,8 +17,11 @@ const Playlists = () => {
 	useEffect(() => {
 		if (data) {
 			const localPl = getLocalPlaylist();
-			const combinedPls = [...localPl, ...data.items];
-			data.items = combinedPls;
+			if (localPl) {
+				const combinedPls = [...localPl, ...data.items];
+				data.items = combinedPls;
+			}
+
 			dispatch({ type: 'GET_PLAYLISTS', payload: data });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

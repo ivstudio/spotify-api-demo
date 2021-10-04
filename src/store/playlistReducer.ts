@@ -65,6 +65,11 @@ export default function playlistReducer(
 				...state,
 				isCreatePlaylistMode: action.payload,
 			};
+		case 'ADD_TRACK_TO_PLAYLIST':
+			console.log(action.payload);
+			return {
+				...state,
+			};
 		default: {
 			return state;
 		}

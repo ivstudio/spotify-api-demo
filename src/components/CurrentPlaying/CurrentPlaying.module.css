@@ -9,3 +9,18 @@
 	font: 1.5rem;
 	font-weight: 600;
 }
+
+.buttonContainer {
+	padding-left: 20px;
+}
+
+.button {
+	border: none;
+	height: 32px;
+	padding: 0 16px;
+	font-size: 14px;
+	font-weight: 500;
+	background: rgba(91, 117, 226, 0.25);
+	color: white;
+	border-radius: 20px;
+}

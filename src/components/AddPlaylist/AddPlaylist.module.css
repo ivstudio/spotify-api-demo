@@ -2,4 +2,18 @@
 	height: 50px;
 	display: flex;
 	align-items: center;
+	margin: 20px 0;
+}
+
+.input {
+	height: 50px;
+	font-size: 1rem;
+	padding: 8px;
+	width: 300px;
+	border-radius: 4px;
+	border: none;
+	border-width: 0;
+	box-shadow: none;
+	outline: none;
+	-webkit-appearance: none;
 }

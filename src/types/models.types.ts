@@ -44,6 +44,10 @@ export interface ISetCreatePlaylistMode
 	payload: boolean;
 }
 
+export interface IAddTrackToPlaylist extends IAction<'ADD_TRACK_TO_PLAYLIST'> {
+	payload: IPlaylist;
+}
+
 export interface IActivePlaylist {
 	id?: string;
 	playlist?: IPlaylistsResponse;
@@ -56,6 +60,7 @@ export type TPlaylistAction =
 	| ISetActivePlayListId
 	| ISetActivePlayList
 	| ISetCreatePlaylistMode
+	| IAddTrackToPlaylist
 	| ISetCurrentPlaying;
 
 /* user */

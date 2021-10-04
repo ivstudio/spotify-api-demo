@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import Button from '../../ui/Button/Button';
+import styles from './LoginPage.module.css';
 
 const LoginPage = () => {
 	const history = useHistory();
@@ -13,9 +15,9 @@ const LoginPage = () => {
 	}, [isAuthenticated, history]);
 
 	return (
-		<div>
+		<div className={styles.container}>
 			<h1>Login</h1>
-			<div onClick={handleLogin}>Login</div>
+			<Button onClick={handleLogin}>Login with Spotify</Button>
 		</div>
 	);
 };

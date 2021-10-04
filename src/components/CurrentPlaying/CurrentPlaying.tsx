@@ -29,7 +29,12 @@ const CurrentPlaying = () => {
 	}
 
 	const handleAddToPlaylist = () => {
-		console.log(activePlaylist, playlists, currentPlaying.item);
+		if (currentPlaying.item) {
+			dispatch({
+				type: 'ADD_TRACK_TO_PLAYLIST',
+				payload: currentPlaying.item,
+			});
+		}
 	};
 
 	return (
@@ -37,9 +42,14 @@ const CurrentPlaying = () => {
 			{!isLoading ? (
 				<div className={styles.container}>
 					<TrackDetails track={currentPlaying.item} condensed />
-					<button onClick={handleAddToPlaylist}>
-						Add to playlist
-					</button>
+					<div className={styles.buttonContainer}>
+						<button
+							className={styles.button}
+							onClick={handleAddToPlaylist}
+							disabled={!activePlaylist?.id}>
+							Add track to active playlist
+						</button>
+					</div>
 				</div>
 			) : (
 				<div>loading...</div>
