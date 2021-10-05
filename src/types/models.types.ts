@@ -2,6 +2,7 @@ import {
 	UserObjectPublic,
 	IPlaylistsResponse,
 	ICurrentPlaying,
+	ITrackObjectSimplified,
 } from './spotify.types';
 
 /* playlist */
@@ -22,7 +23,7 @@ export interface IDeletePlayList extends IAction<'DELETE_PLAYLIST'> {
 	id: string;
 }
 
-export interface IGetPlayList extends IAction<'GET_PLAYLISTS'> {
+export interface IGetPlayList extends IAction<'SET_PLAYLISTS'> {
 	payload: IPlaylistsResponse;
 }
 
@@ -32,7 +33,10 @@ export interface ISetActivePlayListId
 }
 
 export interface ISetActivePlayList extends IAction<'SET_ACTIVE_PLAYLIST'> {
-	payload: IPlaylistsResponse;
+	payload: {
+		spotify?: IPlaylistsResponse;
+		localStorage?: ITrackObjectSimplified[];
+	};
 }
 
 export interface ISetCurrentPlaying extends IAction<'SET_CURRENT_PLAYING'> {
@@ -53,6 +57,7 @@ export interface IActivePlaylist {
 	playlist?: IPlaylistsResponse;
 }
 
+/* reducer actions */
 export type TPlaylistAction =
 	| IAddPlayList
 	| IDeletePlayList

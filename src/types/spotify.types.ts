@@ -20,7 +20,6 @@ export interface UserObjectPublic {
 	href: string;
 	id: string;
 	images?: ImageObject[];
-	type: 'user';
 	uri: string;
 }
 
@@ -31,14 +30,11 @@ export interface IPlaylistItem {
 	id: string;
 	images?: ImageObject[];
 	name: string;
-	owner?: UserObjectPublic;
-	public?: boolean;
-	snapshot_id?: string;
-	type?: 'playlist';
 	uri?: string;
 	track?: ITrackObjectSimplified;
 }
 
+/* user playlists */
 export interface IPlaylistsResponse {
 	href?: string;
 	items: IPlaylistItem[];
@@ -53,7 +49,6 @@ export interface IArtistObjectSimplified {
 	href: string;
 	id: string;
 	name: string;
-	type: 'artist';
 	uri: string;
 }
 
@@ -65,7 +60,6 @@ export interface IAlbumObjectSimplified {
 	id: string;
 	images: ImageObject[];
 	name: string;
-	type: 'album';
 	uri: string;
 }
 
@@ -73,7 +67,6 @@ export interface ITrackLinkObject {
 	external_urls: IExternalUrlObject;
 	href: string;
 	id: string;
-	type: 'track';
 	uri: string;
 }
 
@@ -91,9 +84,9 @@ export interface ITrackObjectSimplified {
 	name: string;
 	preview_url: string;
 	track_number: number;
-	type: 'track';
 	uri: string;
 	album: IAlbumObjectSimplified;
+	playlist_ids?: string[];
 }
 
 export interface ICurrentPlaying {

@@ -12,8 +12,12 @@ export default function playlistReducer(
 					...state.playlists,
 					items: [action.payload, ...state.playlists.items],
 				},
+				activePlaylist: {
+					id: action.payload.id,
+				},
+				isCreatePlaylistMode: false,
 			};
-		case 'GET_PLAYLISTS':
+		case 'SET_PLAYLISTS':
 			return {
 				...state,
 				playlists: action.payload,
@@ -27,16 +31,20 @@ export default function playlistReducer(
 				...state,
 				isCreatePlaylistMode: false,
 				activePlaylist: {
-					playlist: undefined,
+					...state.activePlaylist,
 					id: action.payload.id,
 				},
 			};
 		case 'SET_ACTIVE_PLAYLIST':
+			const { spotify, localStorage = [] } = action.payload;
+			const spotifyTracks = spotify?.items || [];
 			return {
 				...state,
 				activePlaylist: {
 					...state.activePlaylist,
-					playlist: action.payload,
+					playlist: {
+						items: [...localStorage, ...spotifyTracks],
+					},
 				},
 			};
 		case 'SET_CURRENT_PLAYING':
@@ -57,9 +65,22 @@ export default function playlistReducer(
 				isCreatePlaylistMode: action.payload,
 			};
 		case 'ADD_TRACK_TO_PLAYLIST':
-			/* not finished */
+			const tracks = state.activePlaylist?.playlist?.items.length
+				? [
+						...[action.payload],
+						...state.activePlaylist?.playlist?.items,
+				  ]
+				: [action.payload];
+
 			return {
 				...state,
+				activePlaylist: {
+					...state.activePlaylist,
+					playlist: {
+						...state.activePlaylist?.playlist,
+						items: tracks,
+					},
+				},
 			};
 		case 'DELETE_PLAYLIST':
 			/* not finished */

@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { spotifyMe } from '../../apis/apis';
 import { IPlaylistItem, IPlaylistsResponse } from '../../types/spotify.types';
 import { useAppDispatch, useAppSelector } from '../../store/AppStateProvider';
 import styles from './Playlist.module.css';
 import useLocalPlaylist from '../../hooks/useLocalPlaylist';
+import useLocalTrack from '../../hooks/useLocalTrack';
 
 const Playlists = () => {
 	const dispatch = useAppDispatch();
-	const { getLocalPlaylist } = useLocalPlaylist();
+	const { setTracksToPlaylist } = useLocalTrack();
+	const { getLocalPlaylist, isLocalPlaylist } = useLocalPlaylist();
 	const { playlists, activePlaylist } = useAppSelector();
 	const { data, error, isLoading } = useFetch<IPlaylistsResponse>(
 		`${spotifyMe}/playlists`
@@ -22,7 +24,7 @@ const Playlists = () => {
 				data.items = combinedPls;
 			}
 
-			dispatch({ type: 'GET_PLAYLISTS', payload: data });
+			dispatch({ type: 'SET_PLAYLISTS', payload: data });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, dispatch]);
@@ -36,16 +38,11 @@ const Playlists = () => {
 			name,
 			id,
 		};
-
 		dispatch({ type: 'SET_ACTIVE_PLAYLIST_ID', payload: params });
-	};
 
-	const getClasses = (itemId: string) => {
-		let classes = [styles.listItem];
-		if (activePlaylist?.id === itemId) {
-			classes.push(styles.listItemActive);
+		if (isLocalPlaylist(id)) {
+			setTracksToPlaylist(null, id, true);
 		}
-		return classes.join(' ');
 	};
 
 	return (
@@ -55,7 +52,10 @@ const Playlists = () => {
 					{playlists.items.map((item) => (
 						<li
 							key={item.id}
-							className={getClasses(item.id)}
+							className={`${styles.listItem} ${
+								activePlaylist?.id === item.id &&
+								styles.listItemActive
+							}`}
 							onClick={() => setActivePlaylistId(item)}>
 							<span className={styles.listItemText}>
 								{item.name}

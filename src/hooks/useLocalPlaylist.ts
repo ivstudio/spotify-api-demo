@@ -1,7 +1,7 @@
 import { useAppDispatch } from '../store/AppStateProvider';
 import { IPlaylist } from '../types/models.types';
 
-const JBPlaylist = 'JUKEBOX_PLAYLIST';
+const JB_PLAYLIST = 'JUKEBOX_PLAYLIST';
 
 const useLocalPlaylist = () => {
 	const dispatch = useAppDispatch();
@@ -16,7 +16,7 @@ const useLocalPlaylist = () => {
 	};
 
 	const getLocalPlaylist = () => {
-		const pl = localStorage.getItem(JBPlaylist);
+		const pl = localStorage.getItem(JB_PLAYLIST);
 		if (pl && Object.keys(pl).length > 0) {
 			return JSON.parse(pl);
 		}
@@ -27,16 +27,15 @@ const useLocalPlaylist = () => {
 		const localPlaylist = getLocalPlaylist();
 
 		if (!localPlaylist) {
-			localStorage.setItem(JBPlaylist, JSON.stringify([newPlaylist]));
+			localStorage.setItem(JB_PLAYLIST, JSON.stringify([newPlaylist]));
 		} else {
 			localStorage.setItem(
-				JBPlaylist,
+				JB_PLAYLIST,
 				JSON.stringify([...localPlaylist, newPlaylist])
 			);
 		}
 
 		dispatch({ type: 'ADD_PLAYLIST', payload: newPlaylist });
-		dispatch({ type: 'SET_ACTIVE_PLAYLIST_ID', payload: newPlaylist });
 	};
 
 	return { addLocalPlaylist, createId, isLocalPlaylist, getLocalPlaylist };
