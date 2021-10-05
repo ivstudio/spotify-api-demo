@@ -44,7 +44,9 @@ const CurrentPlaying = () => {
 					<TrackDetails track={currentPlaying.item} condensed />
 					<div className={styles.buttonContainer}>
 						<button
-							className={styles.button}
+							className={`${styles.button} ${
+								!activePlaylist?.id && styles.disabled
+							}`}
 							onClick={() => handleAddPlaylist(currentPlaying)}
 							disabled={!activePlaylist?.id}>
 							Add track to active playlist

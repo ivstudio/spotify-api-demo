@@ -1,16 +1,32 @@
 .list {
 	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow: auto;
+	width: 100%;
+}
+
+.containerCondensed {
+	max-width: 240px;
 	height: 100%;
 	padding: 150px 16px 150px;
 	overflow: auto;
-	max-width: 240px;
 	position: absolute;
 	top: 0;
 }
 
-.listItem {
+.listItemCondensed {
 	list-style: none;
 	height: 32px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	padding: 0 8px;
+}
+
+.listItem {
+	list-style: none;
+	height: 38px;
 	display: flex;
 	align-items: center;
 	cursor: pointer;
@@ -35,4 +51,8 @@
 .listItem:not(.listItemActive):hover {
 	background: #202020;
 	border-radius: 4px;
+}
+
+.itemIndex {
+	width: 32px;
 }

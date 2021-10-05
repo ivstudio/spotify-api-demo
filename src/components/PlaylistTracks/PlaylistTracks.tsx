@@ -3,32 +3,36 @@ import useFetch from '../../hooks/useFetch';
 import { spotifyPlaylist } from '../../apis/apis';
 import { IPlaylistsResponse } from '../../types/spotify.types';
 import { useAppSelector } from '../../store/AppStateProvider';
-import styles from './Playlist.module.css';
 import TrackDetails from '../TrackDetails/TrackDetails';
 import useLocalPlaylist from '../../hooks/useLocalPlaylist';
 import useLocalTrack from '../../hooks/useLocalTrack';
+import styles from './Tracks.module.css';
 
-const Playlist = () => {
+interface Props {
+	routeId?: string;
+}
+
+const Tracks = ({ routeId }: Props) => {
 	const { isLocalPlaylist } = useLocalPlaylist();
 	const { setTracksToPlaylist } = useLocalTrack();
 	const { activePlaylist } = useAppSelector();
-	const isNotLocalPlaylist =
-		activePlaylist?.id && !isLocalPlaylist(activePlaylist.id);
+	const playlistId = activePlaylist?.id || routeId;
+	const isNotLocalPlaylist = playlistId && !isLocalPlaylist(playlistId);
 
 	const url = isNotLocalPlaylist
-		? `${spotifyPlaylist}${activePlaylist.id}/tracks`
+		? `${spotifyPlaylist}${playlistId}/tracks`
 		: null;
 
 	const { data, error, isLoading } = useFetch<IPlaylistsResponse>(url);
 
 	useEffect(() => {
-		if (!isLoading && activePlaylist?.id) {
-			if (!isLocalPlaylist(activePlaylist.id)) {
-				setTracksToPlaylist(data, activePlaylist.id);
+		if (!isLoading && playlistId) {
+			if (!isLocalPlaylist(playlistId)) {
+				setTracksToPlaylist(data, playlistId);
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, isLoading, activePlaylist?.id]);
+	}, [data, isLoading, activePlaylist?.id, routeId]);
 
 	const tracks = activePlaylist?.playlist?.items
 		? activePlaylist?.playlist?.items
@@ -38,8 +42,8 @@ const Playlist = () => {
 		return null;
 	}
 
-	if (!activePlaylist?.id) {
-		return <div>select a playlist</div>;
+	if (!playlistId) {
+		return <h2 className={styles.feedbackText}>Select a playlist</h2>;
 	}
 
 	return (
@@ -68,10 +72,12 @@ const Playlist = () => {
 					})}
 				</>
 			) : (
-				<div>Empty Playlist</div>
+				<h2 className={styles.feedbackText}>
+					Add a track to your playlist
+				</h2>
 			)}
 		</div>
 	);
 };
 
-export default Playlist;
+export default Tracks;

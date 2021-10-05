@@ -5,6 +5,7 @@ import useAuth from '../hooks/useAuth';
 interface Props {
 	component: React.ElementType;
 	path: string;
+	exact?: boolean;
 }
 const PrivateRoute = ({ component: Component, ...rest }: Props) => {
 	const { isAuthenticated } = useAuth();

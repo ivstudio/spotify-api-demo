@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import Button from '../../ui/Button/Button';
@@ -10,7 +10,7 @@ const LoginPage = () => {
 
 	useEffect(() => {
 		if (isAuthenticated()) {
-			history.push('/home');
+			history.push('/app');
 		}
 	}, [isAuthenticated, history]);
 

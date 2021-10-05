@@ -25,3 +25,7 @@
 	border-radius: 20px;
 	cursor: pointer;
 }
+
+.disabled {
+	opacity: 0.2;
+}

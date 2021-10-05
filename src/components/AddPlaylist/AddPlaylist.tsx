@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styles from './AddPlaylist.module.css';
 import useLocalPlaylist from '../../hooks/useLocalPlaylist';
+import { useAppDispatch } from '../../store/AppStateProvider';
 import Button from '../../ui/Button/Button';
 
 const AddPlaylist = () => {
+	const dispatch = useAppDispatch();
 	const { addLocalPlaylist, createId } = useLocalPlaylist();
 	const [playlistName, setPlaylistName] = useState('');
 
@@ -22,8 +24,12 @@ const AddPlaylist = () => {
 		setPlaylistName(e.target.value);
 	};
 
+	const handleCancel = () => {
+		dispatch({ type: 'SET_CREATE_PLAYLIST_MODE', payload: false });
+	};
+
 	return (
-		<div>
+		<div className={styles.container}>
 			<h2>Create Playlist</h2>
 			<input
 				autoFocus
@@ -33,6 +39,9 @@ const AddPlaylist = () => {
 				placeholder="Playlist Name"
 			/>
 			<div className={styles.buttonContainer}>
+				<div onClick={handleCancel} className={styles.cancelButton}>
+					Cancel
+				</div>
 				<Button onClick={handleAddPlaylist}>Save Playlist</Button>
 			</div>
 		</div>

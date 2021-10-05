@@ -1,4 +1,4 @@
-import { IStore, TRootAction, IPlaylist } from '../types/models.types';
+import { IStore, TRootAction } from '../types/models.types';
 
 export default function playlistReducer(
 	state: IStore,
@@ -80,19 +80,6 @@ export default function playlistReducer(
 						...state.activePlaylist?.playlist,
 						items: tracks,
 					},
-				},
-			};
-		case 'DELETE_PLAYLIST':
-			/* not finished */
-			return {
-				...state,
-				playlists: {
-					...state.playlists,
-					items: [
-						...state.playlists.items.filter(
-							(i: IPlaylist) => i.id !== action.id
-						),
-					],
 				},
 			};
 		default: {

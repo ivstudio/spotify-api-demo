@@ -1,5 +1,8 @@
 # Getting Started with Create React App
 
+IF THE TOKEN IS EXPIRED:
+On the Chrome console. Go to Application > Storage > Remove Keys.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

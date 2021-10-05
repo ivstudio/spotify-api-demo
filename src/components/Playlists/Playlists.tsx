@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import { spotifyMe } from '../../apis/apis';
 import { IPlaylistItem, IPlaylistsResponse } from '../../types/spotify.types';
@@ -7,7 +8,12 @@ import styles from './Playlist.module.css';
 import useLocalPlaylist from '../../hooks/useLocalPlaylist';
 import useLocalTrack from '../../hooks/useLocalTrack';
 
-const Playlists = () => {
+interface Props {
+	condensed?: boolean;
+}
+
+const Playlists = ({ condensed: isSidebarPlaylist = false }: Props) => {
+	const history = useHistory();
 	const dispatch = useAppDispatch();
 	const { setTracksToPlaylist } = useLocalTrack();
 	const { getLocalPlaylist, isLocalPlaylist } = useLocalPlaylist();
@@ -38,18 +44,48 @@ const Playlists = () => {
 			name,
 			id,
 		};
-		dispatch({ type: 'SET_ACTIVE_PLAYLIST_ID', payload: params });
 
 		if (isLocalPlaylist(id)) {
 			setTracksToPlaylist(null, id, true);
 		}
+
+		dispatch({ type: 'SET_ACTIVE_PLAYLIST_ID', payload: params });
+
+		if (!isSidebarPlaylist) {
+			history.push(`/app/playlists/${id}`);
+		}
 	};
+
+	if (isSidebarPlaylist) {
+		return (
+			<>
+				{!isLoading ? (
+					<ul
+						className={`${styles.list} ${styles.containerCondensed}`}>
+						{playlists.items.map((item) => (
+							<li
+								key={item.id}
+								className={`${styles.listItemCondensed} ${
+									activePlaylist?.id === item.id &&
+									styles.listItemActive
+								}`}
+								onClick={() => setActivePlaylistId(item)}>
+								<span className={styles.listItemText}>
+									{item.name}
+								</span>
+							</li>
+						))}
+					</ul>
+				) : null}
+			</>
+		);
+	}
 
 	return (
 		<>
 			{!isLoading ? (
 				<ul className={styles.list}>
-					{playlists.items.map((item) => (
+					{playlists.items.map((item, index) => (
 						<li
 							key={item.id}
 							className={`${styles.listItem} ${
@@ -57,6 +93,9 @@ const Playlists = () => {
 								styles.listItemActive
 							}`}
 							onClick={() => setActivePlaylistId(item)}>
+							<span className={styles.itemIndex}>
+								{index + 1}
+							</span>
 							<span className={styles.listItemText}>
 								{item.name}
 							</span>

@@ -8,7 +8,7 @@ const {
 
 const spotifyAuthUrl = `${authUrl}?client_id=${clientID}&redirect_uri=${redirectUri}&response_type=token&show_dialog=true&
 scope=user-read-currently-playing`;
-const JUKEBOX = 'jukebox';
+const JUKEBOX = 'JUKEBOX';
 
 interface IAuthParams {
 	access_token: string;
@@ -41,11 +41,24 @@ const useAuth = () => {
 		history.push('/');
 	};
 
+	const getCurrentTime = (token: string) => {
+		const exp = new Date().getTime();
+		return exp.toString();
+	};
+
+	const isTokenExpired = () => {
+		const token = getAuthParams();
+		if (Object.keys(token).length > 0) {
+			// implement token refresh
+		}
+	};
+
 	const setAuthorization = (url: string) => {
 		const authParams = formatAuthObj(url);
 		if (authParams.access_token) {
+			// authParams.expires_in = getCurrentTime(authParams.expires_in);
 			localStorage.setItem(JUKEBOX, JSON.stringify(authParams));
-			history.push('/home');
+			history.push('/app');
 		} else {
 			history.push('/');
 		}
@@ -65,7 +78,13 @@ const useAuth = () => {
 		setAuthorization,
 		getAuthParams,
 		isAuthenticated,
+		isTokenExpired,
 	};
 };
 
 export default useAuth;
+
+/* 
+NOTES:
+Handle token expiration - currently it expires after 1hr.
+*/
